@@ -9,6 +9,7 @@ try:
 except ImportError:
     Psycopg2OpError = None
 
+
 class Command(BaseCommand):
     """The command to wait for db connections"""
 
@@ -22,7 +23,9 @@ class Command(BaseCommand):
             except (OperationalError, DatabaseError) as e:
                 if Psycopg2OpError and isinstance(e, Psycopg2OpError):
                     pass
-                self.stdout.write(self.style.WARNING("Database unavailable, wait 1 second..."))
+                self.stdout.write(self.style.WARNING(
+                    "Database unavailable, wait 1 second..."
+                ))
                 time.sleep(1)
             else:
                 self.stdout.write(self.style.SUCCESS("Database available!"))
